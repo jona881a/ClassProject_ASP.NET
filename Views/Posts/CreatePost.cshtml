@@ -1,0 +1,19 @@
+@model classProject.Models.Post
+
+<form asp-action="createPost" asp-controller="Posts">
+    <div id="form-group">
+        <label asp-for="title">Post title</label>
+        <input asp-for="title" placeholder="write your post title here"/>
+    </div>
+    <div id="form-group">
+        <label asp-for="body">Post body</label>
+        <input asp-for="body" placeholder="write your post body here"/>
+    </div>
+    <div id="form-group">
+        <label>Author of Post</label>
+        <input asp-for="author" placeholder="write authors full name here">
+    </div>
+
+    <input type="submit"/>
+
+</form>
