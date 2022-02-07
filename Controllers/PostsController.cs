@@ -12,17 +12,22 @@ public class PostsController : Controller {
         return View();
     }
 
-     [HttpGet]
-    public IActionResult CreatePost() {
-        return View();
+    [HttpGet]
+    public IActionResult Post() {
+        return View("CreatePost");
     }
 
     [HttpPost]
-    public IActionResult CreatePost(Post post) {
-        Post newPost = new Post(post.title, post.body, post.author);
+    [ValidateAntiForgeryToken]
+    public IActionResult Post([Bind("Title,Body,Author")] Post post) {
 
-        return Content($"Post title: {post.title}, Post body: {post.body}, Post author: {post.author}");
-        //return newPost.ToString;
+        if(ModelState.IsValid) {
+
+            Post newPost = new Post(post.Title, post.Body, post.Author);
+            return View("Thanks");
+        }
+    
+        return RedirectToAction("Post");
     }
 
 }
