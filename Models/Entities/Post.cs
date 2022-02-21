@@ -8,16 +8,16 @@ public class Post {
 
     public int id {get; set;}
     [Required]
-    [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
-    [StringLength(20,MinimumLength = 3),Display(Name = "Post Title")]
+    [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$", ErrorMessage = "The first letter must be uppercase and there must not be special characters")]
+    [StringLength(20,MinimumLength = 3, ErrorMessage = "The Title mus be minimum 3 characters and maximum 20"),Display(Name = "Post Title")]
     public string? Title {get; set;}
     [Required]
-    [StringLength(500,MinimumLength = 20),Display(Name = "Post Body")]
+    [StringLength(500,MinimumLength = 20, ErrorMessage = "The Post Body must be atleast 20 characters and maximum 500"),Display(Name = "Post Body")]
     public string? Body{get; set;}
 
     [Required]
-    [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
-    [StringLength(20,MinimumLength = 5), Display(Name = "Author of Post")]
+    [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$", ErrorMessage = "The first letter must be uppercase and there must not be special characters")]
+    [StringLength(20,MinimumLength = 3, ErrorMessage ="The Author should atleast have 3 characters and maximum 20"), Display(Name = "Author of Post")]
     public string? Author{get; set;}
 
     [DataType(DataType.Date)]
@@ -25,7 +25,7 @@ public class Post {
 
     public PostStatus PostStatus {get;set;}
 
-    public override string? ToString()
+    public override string ToString()
     {
         return "Post title: " + Title + "Post body: " + Body + "Post author: " + Author;
     }

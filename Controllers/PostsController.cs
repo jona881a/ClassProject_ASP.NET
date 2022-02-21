@@ -1,9 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using classProject.Models;
+using classProject.Data;
 
 namespace classProject.Controllers;
 
 public class PostsController : Controller {
+
+    private readonly ClassProjectContext _context;
+
+    public PostsController(ClassProjectContext context) {
+        _context = context;
+    }
 
     public IActionResult Thanks() {
         ViewBag.greet = "Hello there from the ViewBag";
@@ -22,12 +29,14 @@ public class PostsController : Controller {
     public IActionResult Post([Bind("Title,Body,Author")] Post post) {
 
         if(ModelState.IsValid) {
+            
+            post.CreationDate = DateTime.Now;
+            _context.Posts.Add(post);
+            _context.SaveChanges();
 
-            Post newPost = new Post(post.Title, post.Body, post.Author);
             return View("Thanks");
-        }
-    
-        return RedirectToAction("Post");
+        } else {
+            return RedirectToAction("Post");
+        }      
     }
-
 }
