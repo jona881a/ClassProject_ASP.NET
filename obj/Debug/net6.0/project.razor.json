@@ -16303,6 +16303,16 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/Users/jonaskunert/Desktop/Datamatiker/4.Semester/dotnet C#/classProject/Views/Posts/index.cshtml",
+      "TargetPath": "Views\\Posts\\index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/jonaskunert/Desktop/Datamatiker/4.Semester/dotnet C#/classProject/Views/Posts/Edit.cshtml",
+      "TargetPath": "Views\\Posts\\Edit.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/Users/jonaskunert/Desktop/Datamatiker/4.Semester/dotnet C#/classProject/Views/_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"

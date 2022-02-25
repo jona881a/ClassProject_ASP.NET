@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using classProject.Data;
 
@@ -10,9 +11,10 @@ using classProject.Data;
 namespace classProject.Migrations
 {
     [DbContext(typeof(ClassProjectContext))]
-    partial class ClassProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20220221100219_editedPostModel")]
+    partial class editedPostModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.2");
