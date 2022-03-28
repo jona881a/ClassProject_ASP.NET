@@ -1,5 +1,6 @@
 using classProject.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+        .AddDefaultUI()
+        .AddEntityFrameworkStores<ClassProjectContext>();
 builder.Services.AddDbContext<ClassProjectContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("ClassProjectContext")));
+builder.Services.AddControllersWithViews();
+    
 
 var app = builder.Build();
 
@@ -24,9 +30,10 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using classProject.Models;
 using classProject.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace classProject.Controllers;
-
+[Authorize]
 public class PostsController : Controller
 {
 
@@ -14,7 +15,7 @@ public class PostsController : Controller
     {
         _context = context;
     }
-
+    [AllowAnonymous]
     public IActionResult Index()
     {
         IEnumerable<Post> posts = _context.Posts.ToList();
@@ -41,7 +42,6 @@ public class PostsController : Controller
 
         if (ModelState.IsValid)
         {
-
             post.CreationDate = DateTime.Now;
             _context.Posts.Add(post);
             _context.SaveChanges();
@@ -73,7 +73,7 @@ public class PostsController : Controller
     [HttpPost]
     public IActionResult Edit(int id, [Bind("Id,Title,Body,Author,Status")] Post post)
     {
-        if (id != post.Id)
+        if (id != post.PostId)
         {
             return NotFound();
         }

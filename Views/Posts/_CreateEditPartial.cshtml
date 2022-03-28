@@ -1,0 +1,30 @@
+@model classProject.Models.Post;
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+  <label asp-for="Title" class="control-label">Post title</label>
+  <input asp-for="Title" class="form-control" placeholder="write your post title here" />
+  <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="Body" class="control-label">Post body</label>
+  <input asp-for="Body" class="form-control" placeholder="write your post body here" />
+  <span asp-validation-for="Body" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="Author" class="control-label">Author of Post</label>
+  <input asp-for="Author" class="form-control" placeholder="write authors full name here">
+  <span asp-validation-for="Author" class="text-danger"></span>
+</div>
+<div class="form-group">
+  <label asp-for="Status" class="control-label">Status of Post</label>
+  <input asp-for="Status" class="form-control" placeholder="write DRAFT OR PUBLISHED">
+  <span asp-validation-for="Status" class="text-danger"></span>
+  <!--<select asp-for"Status">
+                    <option value="DRAFT">DRAFT</option>
+                    <option value="PUBLISHED">PUBLISHED</option>
+                </select>-->
+</div>
+<div class="form-group">
+  <input type="submit" value="Save" class="btn btn-primary" />
+</div>
