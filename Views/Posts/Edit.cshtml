@@ -22,6 +22,18 @@
   <a asp-action="Index">Back to List</a>
 </div>
 
+@foreach (var comment in Model.Comments)
+{
+  <div class="row">
+    <div class="col-md-4">
+      @comment.User.Email
+    </div>
+    <div>
+      @comment.CommentBody
+    </div>
+  </div>
+}
+
 @section Scripts {
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

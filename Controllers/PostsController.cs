@@ -3,6 +3,8 @@ using classProject.Models;
 using classProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using classProject.Models.Entites;
 
 namespace classProject.Controllers;
 [Authorize]
@@ -10,24 +12,23 @@ public class PostsController : Controller
 {
 
     private readonly ClassProjectContext _context;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public PostsController(ClassProjectContext context)
+    public PostsController(ClassProjectContext context, UserManager<IdentityUser> userManager)
     {
-        _context = context;
+        this._userManager = userManager;
+        this._context = context;
     }
     [AllowAnonymous]
-    public IActionResult Index()
+    public IActionResult Index(string SearchString)
     {
-        IEnumerable<Post> posts = _context.Posts.ToList();
-        return View(posts);
-    }
+        var posts = from p in _context.Posts select p;
 
-    public IActionResult Thanks()
-    {
-        ViewBag.greet = "Hello there from the ViewBag";
-        // ViewBag.goodbyes = "Bye for now"; Kan ikke have to 
+        posts = posts.Where(x => x.Title.Contains(SearchString)).Include(y => y.User);
 
-        return View();
+        var vm = new PostIndexVm {Posts= posts.ToList(), SearchString = SearchString};
+
+        return View(vm);
     }
 
     public IActionResult Post()
@@ -36,13 +37,16 @@ public class PostsController : Controller
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Post([Bind("Title,Body,Author,Status")] Post post)
+    [ValidateAntiForgeryToken] 
+    public async Task<IActionResult> Post([Bind("Title,Body,Author,Status")] Post post)
     {
 
         if (ModelState.IsValid)
         {
+            IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
             post.CreationDate = DateTime.Now;
+            post.User = user;
             _context.Posts.Add(post);
             _context.SaveChanges();
 
@@ -61,12 +65,11 @@ public class PostsController : Controller
             return NotFound();
         }
 
-        var Post = _context.Posts.Find(id);
+        var Post = _context.Posts.Include(x => x.Comments).ThenInclude(x => x.User).First(x => x.PostId == id);
         if (Post == null)
         {
             return NotFound();
         }
-        Console.Write(Post);
         return View(Post);
     }
 

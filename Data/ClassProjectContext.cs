@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using classProject.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace classProject.Data;
 
@@ -18,6 +19,7 @@ public class ClassProjectContext : IdentityDbContext{
         protected override void OnModelCreating(ModelBuilder builder)  
         {  
             base.OnModelCreating(builder);  
+            this.UsersSeed(builder);
             this.SeedPosts(builder);  
             this.SeedComments(builder);  
         }  
@@ -36,8 +38,34 @@ public class ClassProjectContext : IdentityDbContext{
 
         private void SeedComments(ModelBuilder builder) {
             builder.Entity<Comment>().HasData(
-            new Comment() {CommentId = 1, CommentDate = DateTime.Now, CommentBody="Amazing post", CommentAuthor="Jonas", PostId=1},
-            new Comment() {CommentId = 2, CommentDate = DateTime.Now, CommentBody="Amazing post", CommentAuthor="Jonas", PostId=2},
-            new Comment() {CommentId = 3, CommentDate = DateTime.Now, CommentBody="Amazing post", CommentAuthor="Jonas", PostId=3});
+            new Comment() {CommentId = 1, CommentDate = DateTime.Now, CommentBody="Amazing post", CommentAuthor="Jonas", PostId=1, UserId = "1"},
+            new Comment() {CommentId = 2, CommentDate = DateTime.Now, CommentBody="Amazing post", CommentAuthor="Jonas", PostId=2, UserId = "2"},
+            new Comment() {CommentId = 3, CommentDate = DateTime.Now, CommentBody="Amazing post", CommentAuthor="Jonas", PostId=3, UserId = "1"});
         }
+
+       private void UsersSeed(ModelBuilder builder) {
+
+        var user1 = new IdentityUser
+        {
+            Id = "1", Email = "chrk@kea.dk",
+            EmailConfirmed = true, UserName = "chrk@kea.dk",
+        };
+        
+        var user2 = new IdentityUser
+        {
+            Id = "2", Email = "test@kea.dk",
+            EmailConfirmed = true, UserName = "test@kea.dk",
+        };
+
+        PasswordHasher<IdentityUser> passHash = new PasswordHasher<IdentityUser>();
+
+        user1.PasswordHash = passHash.HashPassword(user1, "aA123456!");
+
+        user2.PasswordHash = passHash.HashPassword(user2, "aA123456!");
+
+        builder.Entity<IdentityUser>().HasData(
+            user1, user2
+        );
+        }
+
 }

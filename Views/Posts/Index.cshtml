@@ -1,4 +1,11 @@
-@model IEnumerable<classProject.Models.Post>
+@model classProject.Models.Entites.PostIndexVm;
+
+    <form asp-controller="Posts" asp-action="Index" method="get">
+        <p>
+            Title: <input type="text" name="SearchString" value="@Model.SearchString" />
+            <input type="submit" value="Filter">
+        </p>
+    </form>
 
 <div class="container">
     <div class="row">
@@ -12,21 +19,24 @@
     <div class="row">
         <div class="col-6">
             <strong>
-                 @Html.DisplayNameFor(model => model.Title)
+                 <!--Html.DisplayNameFor(model => model.Title)-->
+                 Title
             </strong>
         </div>
         <div class="col-2">
             <strong>
-                @Html.DisplayNameFor(model => model.CreationDate)
+                <!--Html.DisplayNameFor(model => model.CreationDate)-->
+                Creation Date
             </strong>
         </div>
         <div class="col-2">
             <strong>
-                @Html.DisplayNameFor(model => model.Status)
+                <!--Html.DisplayNameFor(model => model.Status)-->
+                Status
             </strong>
         </div>
     </div>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Posts)
         {
             <div class="row postrow">
                 <div class="col-6">

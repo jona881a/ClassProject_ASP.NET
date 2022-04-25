@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 namespace classProject.Models;
 
 public class Post {
@@ -31,6 +32,10 @@ public class Post {
 
     public List<Comment> Comments {get; set;}
 
+    public string UserId {get;set;}
+
+    public IdentityUser? User {get;set;}
+
     public Post(){}
     public Post(string Title, string Body, string Author, PostStatus Status) {
         this.Title = Title;
@@ -38,4 +43,5 @@ public class Post {
         this.Author = Author;
         this.Status = Status;
     }
+
 }

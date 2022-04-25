@@ -11,8 +11,8 @@ using classProject.Data;
 namespace classProject.Migrations
 {
     [DbContext(typeof(ClassProjectContext))]
-    [Migration("20220328083654_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20220425080818_InititalCreate")]
+    partial class InititalCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,12 +37,17 @@ namespace classProject.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("likes")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("CommentId");
 
                     b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comment");
 
@@ -52,8 +57,9 @@ namespace classProject.Migrations
                             CommentId = 1,
                             CommentAuthor = "Jonas",
                             CommentBody = "Amazing post",
-                            CommentDate = new DateTime(2022, 3, 28, 10, 36, 54, 36, DateTimeKind.Local).AddTicks(520),
+                            CommentDate = new DateTime(2022, 4, 25, 10, 8, 18, 614, DateTimeKind.Local).AddTicks(8650),
                             PostId = 1,
+                            UserId = "1",
                             likes = 0
                         },
                         new
@@ -61,8 +67,9 @@ namespace classProject.Migrations
                             CommentId = 2,
                             CommentAuthor = "Jonas",
                             CommentBody = "Amazing post",
-                            CommentDate = new DateTime(2022, 3, 28, 10, 36, 54, 36, DateTimeKind.Local).AddTicks(530),
+                            CommentDate = new DateTime(2022, 4, 25, 10, 8, 18, 614, DateTimeKind.Local).AddTicks(8650),
                             PostId = 2,
+                            UserId = "2",
                             likes = 0
                         },
                         new
@@ -70,8 +77,9 @@ namespace classProject.Migrations
                             CommentId = 3,
                             CommentAuthor = "Jonas",
                             CommentBody = "Amazing post",
-                            CommentDate = new DateTime(2022, 3, 28, 10, 36, 54, 36, DateTimeKind.Local).AddTicks(530),
+                            CommentDate = new DateTime(2022, 4, 25, 10, 8, 18, 614, DateTimeKind.Local).AddTicks(8660),
                             PostId = 3,
+                            UserId = "1",
                             likes = 0
                         });
                 });
@@ -103,7 +111,12 @@ namespace classProject.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("PostId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
 
@@ -113,7 +126,7 @@ namespace classProject.Migrations
                             PostId = 1,
                             Author = "Jonas Kunert",
                             Body = "Post 1 bla bla bla",
-                            CreationDate = new DateTime(2022, 3, 28, 10, 36, 54, 36, DateTimeKind.Local).AddTicks(330),
+                            CreationDate = new DateTime(2022, 4, 25, 10, 8, 18, 614, DateTimeKind.Local).AddTicks(8550),
                             Status = 1,
                             Title = "Post no 1"
                         },
@@ -122,7 +135,7 @@ namespace classProject.Migrations
                             PostId = 2,
                             Author = "Jonas Kunert",
                             Body = "Post 2 bla bla bla",
-                            CreationDate = new DateTime(2022, 3, 28, 10, 36, 54, 36, DateTimeKind.Local).AddTicks(410),
+                            CreationDate = new DateTime(2022, 4, 25, 10, 8, 18, 614, DateTimeKind.Local).AddTicks(8610),
                             Status = 1,
                             Title = "Post no 2"
                         },
@@ -131,7 +144,7 @@ namespace classProject.Migrations
                             PostId = 3,
                             Author = "Jonas Kunert",
                             Body = "Post 3 bla bla bla",
-                            CreationDate = new DateTime(2022, 3, 28, 10, 36, 54, 36, DateTimeKind.Local).AddTicks(420),
+                            CreationDate = new DateTime(2022, 4, 25, 10, 8, 18, 614, DateTimeKind.Local).AddTicks(8620),
                             Status = 1,
                             Title = "Post no 3"
                         });
@@ -248,6 +261,36 @@ namespace classProject.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "493d5209-8205-4fdf-af98-48854b7200aa",
+                            Email = "chrk@kea.dk",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEMn8Lqrw5cxiAp0KyLizL4gMgfMXCmpGFL/zU760F9Syh0f2GfTMWLvcuIyOlkmWuw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1a863fd1-39ed-4ea8-ac2f-3d6a22bcdb12",
+                            TwoFactorEnabled = false,
+                            UserName = "chrk@kea.dk"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "fd9d037b-3ee0-4003-a87a-936466c61364",
+                            Email = "test@kea.dk",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEJykMxSe+JymKc7chjcDBVVp4stb+g4I1J9O/c5n9eiqPPJOFpD3dTIM0aqK7vRiqw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1db9bbff-73a8-4881-a01c-11916e6dc8a4",
+                            TwoFactorEnabled = false,
+                            UserName = "test@kea.dk"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -337,7 +380,22 @@ namespace classProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("classProject.Models.Post", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
